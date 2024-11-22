@@ -55,6 +55,9 @@ git_clone_source_repo
 #./autogen.sh
 #cd /uny/sources || exit
 
+mv -v postfix postfix_source
+mv -v postfix_source/postfix postfix
+
 archiving_source
 
 ######################################################################################################################
