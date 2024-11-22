@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-#unyp install python expat openssl
+unyp install lmdb libnsl cyrus-sasl
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -35,7 +35,7 @@ mkdir -pv /uny/sources
 cd /uny/sources || exit
 
 pkgname="postfix"
-pkggit="https://github.com/postfix/postfix.git refs/tags/*"
+pkggit="https://github.com/vdukhovni/postfix.git refs/tags/*"
 gitdepth="--depth=1"
 
 ### Get version info from git remote
