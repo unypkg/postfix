@@ -88,7 +88,7 @@ groupadd -g 32 postfix &&
 
 sed -i 's/.\x08//g' README_FILES/*
 
-sed "s#(uname -r) 2>/dev/null#(uname -r | grep -o "^[0-9.]*") 2>/dev/null#" makedefs
+sed "s#(uname -r) 2>/dev/null#(uname -r | grep -o "^[0-9.]*") 2>/dev/null#" -i makedefs
 
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
