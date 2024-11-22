@@ -86,6 +86,9 @@ groupadd -g 32 postfix &&
         -s /bin/false -u 32 postfix &&
     chown -v postfix:postfix /var/mail
 
+pwd
+ls -lh
+
 sed -i 's/.\x08//g' README_FILES/*
 
 sed "s#(uname -r) 2>/dev/null#(uname -r | grep -o "^[0-9.]*") 2>/dev/null#" -i makedefs
