@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-unyp install lmdb libnsl cyrus-sasl
+unyp install lmdb libnsl cyrus-sasl icu
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
