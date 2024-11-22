@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-unyp install lmdb libnsl cyrus-sasl icu
+unyp install lmdb libnsl cyrus-sasl icu openssl
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -77,12 +77,37 @@ get_include_paths
 
 unset LD_RUN_PATH
 
-./configure \
-    --prefix=/uny/pkg/"$pkgname"/"$pkgver"
+groupadd -g 32 postfix &&
+    groupadd -g 33 postdrop &&
+    useradd -c "Postfix Daemon User" -d /var/spool/postfix -g postfix \
+        -s /bin/false -u 32 postfix &&
+    chown -v postfix:postfix /var/mail
 
-make -j"$(nproc)"
-make -j"$(nproc)" check 
-make -j"$(nproc)" install
+sed -i 's/.\x08//g' README_FILES/*
+
+CCARGS="-DNO_NIS -DNO_DB"
+AUXLIBS=""
+
+cyrus_include_dir=(/uny/pkg/cyrus-sasl/*/include/sasl)
+CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${cyrus_include_dir[0]}"
+AUXLIBS="$AUXLIBS -lsasl2"
+
+CCARGS="$CCARGS -DHAS_LMDB"
+AUXLIBS="$AUXLIBS -llmdb"
+
+openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
+CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
+AUXLIBS="$AUXLIBS -lssl -lcrypto"
+
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &&
+    make
+
+install_dir=/uny/pkg/"$pkgname"/"$pkgver"
+sh postfix-install -non-interactive \
+    daemon_directory="$install_dir"/lib/postfix \
+    manpage_directory="$install_dir"/share/man \
+    html_directory="$install_dir"/share/doc/postfix/html \
+    readme_directory="$install_dir"/share/doc/postfix/readme
 
 ####################################################
 ### End of individual build script
