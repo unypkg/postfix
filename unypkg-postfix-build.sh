@@ -112,12 +112,12 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &&
     make
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
-install_dir=/uny/pkg/"$pkgname"/"$pkgver"
-sh postfix-install -non-interactive \
-    daemon_directory="$install_dir"/lib/postfix \
-    manpage_directory="$install_dir"/share/man \
-    html_directory="$install_dir"/share/doc/postfix/html \
-    readme_directory="$install_dir"/share/doc/postfix/readme
+export install_root=/uny/pkg/"$pkgname"/"$pkgver"
+sh postfix-install -non-interactive -package
+#    daemon_directory="$install_dir"/lib/postfix \
+#    manpage_directory="$install_dir"/share/man \
+#    html_directory="$install_dir"/share/doc/postfix/html \
+#    readme_directory="$install_dir"/share/doc/postfix/readme
 
 ####################################################
 ### End of individual build script
