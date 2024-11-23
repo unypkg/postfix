@@ -108,17 +108,30 @@ openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
 CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
 AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &&
+export install_root=/uny/pkg/"$pkgname"/"$pkgver"
+
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" pie=yes \
+    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
+    daemon_directory="$install_root"/lib/postfix \
+    command_directory="$install_root"/sbin \
+    mailq_path="$install_root"/bin/mailq \
+    newaliases_path="$install_root"/bin/newaliases \
+    sendmail_path="$install_root"/sbin/sendmail \
+    shlib_directory="$install_root"/lib \
+    manpage_directory="$install_root"/share/man \
+    makefiles &&
     make
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
-export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 sh postfix-install -non-interactive -package \
+    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory=/lib/postfix \
-    command_directory=/bin \
-    manpage_directory=/share/man \
-    html_directory=/share/doc/postfix/html \
-    readme_directory=/share/doc/postfix/readme
+    command_directory=/sbin \
+    mailq_path=/bin/mailq \
+    newaliases_path=/bin/newaliases \
+    sendmail_path=/sbin/sendmail \
+    shlib_directory=/lib \
+    manpage_directory=/share/man
 
 ####################################################
 ### End of individual build script
