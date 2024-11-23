@@ -111,6 +111,7 @@ AUXLIBS="$AUXLIBS -lssl -lcrypto"
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" makefiles &&
     make
 
+sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 install_dir=/uny/pkg/"$pkgname"/"$pkgver"
 sh postfix-install -non-interactive \
     daemon_directory="$install_dir"/lib/postfix \
