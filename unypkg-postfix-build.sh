@@ -78,7 +78,8 @@ get_include_paths
 ####################################################
 ### Start of individual build script
 
-unset LD_RUN_PATH
+#unset LD_RUN_PATH
+unset LD_LIBRARY_PATH
 
 groupadd -g 32 postfix &&
     groupadd -g 33 postdrop &&
