@@ -87,9 +87,6 @@ groupadd -g 32 postfix &&
         -s /bin/false -u 32 postfix &&
     chown -v postfix:postfix /var/mail
 
-pwd
-ls -lh
-
 sed -i 's/.\x08//g' README_FILES/*
 
 sed "s#\(uname -r\) 2>/dev/null#\(uname -r | grep -o "^[0-9.]\*"\) 2>/dev/null#" -i makedefs
@@ -108,9 +105,9 @@ openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
 CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
 AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
-icu_include_dir=(/uny/pkg/icu/*/include)
-CCARGS="$CCARGS -I${icu_include_dir[0]}"
-AUXLIBS="$AUXLIBS -licuuc"
+icu_dir=(/uny/pkg/icu/*)
+CCARGS="$CCARGS -I${icu_include_dir[0]}/include"
+AUXLIBS="$AUXLIBS -L${icu_include_dir[0]}/lib -licuuc -licudata"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
