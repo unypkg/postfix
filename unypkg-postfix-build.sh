@@ -111,7 +111,7 @@ SYSLIBS="$SYSLIBS -L${icu_include_dir[0]}/lib -licui18n -licuuc -licudata"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" pie=yes \
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" pie=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
     command_directory="$install_root"/sbin \
