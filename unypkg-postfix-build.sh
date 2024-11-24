@@ -106,8 +106,8 @@ CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
 AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
 icu_dir=(/uny/pkg/icu/*)
-CCARGS="$CCARGS -I${icu_include_dir[0]}/include"
-SYSLIBS="$SYSLIBS -L${icu_include_dir[0]}/lib -licui18n -licuuc -licudata"
+CCARGS="$CCARGS -I${icu_dir[0]}/include"
+SYSLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
