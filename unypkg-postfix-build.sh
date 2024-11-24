@@ -110,6 +110,7 @@ AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
 icu_include_dir=(/uny/pkg/icu/*/include)
 CCARGS="$CCARGS -I${icu_include_dir[0]}"
+AUXLIBS="$AUXLIBS -licuuc"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
