@@ -108,6 +108,9 @@ openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
 CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
 AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
+icu_include_dir=(/uny/pkg/icu/*/include)
+CCARGS="$CCARGS -I${icu_include_dir[0]}"
+
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" pie=yes \
