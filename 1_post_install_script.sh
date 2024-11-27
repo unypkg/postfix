@@ -23,6 +23,10 @@ if [ ! -f /etc/uny/postfix/main.cf ]; then
     sbin/postfix -c /etc/uny/postfix set-permissions
 fi
 
+if [ ! -d /var/spool/postfix ]; then
+    install -v -dm 755 -o postfix -g postfix /var/spool/postfix
+fi
+
 #############################################################################################
 ### End of script
 
