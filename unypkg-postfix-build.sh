@@ -116,10 +116,12 @@ AUXLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
 pcre2_dir=(/uny/pkg/pcre2/*)
 CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
+AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" SHLIB_RPATH="-Wl,--enable-new-dtags $LDFLAGS" shared=yes pie=yes dynamicmaps=yes \
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" SHLIB_RPATH="-Wl,--enable-new-dtags $LDFLAGS" \
+    shared=yes pie=yes dynamicmaps=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
     command_directory="$install_root"/sbin \
