@@ -90,7 +90,7 @@ groupadd -g 32 postfix &&
 sed -i 's/.\x08//g' README_FILES/*
 
 sed 's#(uname -r) 2>/dev/null#\(uname -r | grep -o "^[0-9.]\*") 2>/dev/null#' -i makedefs
-sed '/CCARGS="\$CCARGS -DNO_EAI"/a SYSLIBS="\$SYSLIBS $icu_ldflags"' -i makedefs
+sed '/	CCARGS="$CCARGS -DNO_EAI"/a SYSLIBS="\$SYSLIBS $icu_ldflags"' -i makedefs
 sed '#CCARGS="\$CCARGS -DNO_EAI"#CCARGS="\$CCARGS \$icu_cppflags"#' -i makedefs
 sed 's#CCARGS="\$CCARGS -DNO_EAI"'\'' -DDEF_SMTPUTF8_ENABLE=\\"no\\"'\''#CCARGS="\$CCARGS $(pkgconf --cflags icu-uc icu-i18n)" SYSLIBS="\$SYSLIBS $(pkgconf --libs icu-uc icu-i18n)"#' -i makedefs
 sed "s|-DNO_EAI||g" -i makedefs
@@ -110,8 +110,8 @@ openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
 CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
 AUXLIBS="$AUXLIBS -lssl -lcrypto"
 
-#icu_dir=(/uny/pkg/icu/*)
-#CCARGS="$CCARGS -I${icu_dir[0]}/include"
+icu_dir=(/uny/pkg/icu/*)
+CCARGS="$CCARGS -I${icu_dir[0]}/include"
 #SYSLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
 CCARGS="$CCARGS -DHAS_PCRE=2"
