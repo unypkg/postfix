@@ -107,7 +107,7 @@ CCARGS="$CCARGS -DHAS_LMDB"
 AUXLIBS="$AUXLIBS -llmdb"
 
 openssl_dir=(/uny/pkg/openssl/*)
-CCARGS="$CCARGS -DUSE_TLS -I${openssl_dir[0]}/include/openssl}"
+CCARGS="$CCARGS -DUSE_TLS -I${openssl_dir[0]}/include/openssl"
 AUXLIBS="$AUXLIBS -L${openssl_dir[0]}/lib -lssl -lcrypto"
 
 icu_dir=(/uny/pkg/icu/*)
