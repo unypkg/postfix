@@ -94,7 +94,6 @@ sed '/	CCARGS="$CCARGS -DNO_EAI"/a SYSLIBS="\$SYSLIBS $icu_ldflags"' -i makedefs
 sed '#CCARGS="\$CCARGS -DNO_EAI"#CCARGS="\$CCARGS \$icu_cppflags"#' -i makedefs
 sed 's#CCARGS="\$CCARGS -DNO_EAI"'\'' -DDEF_SMTPUTF8_ENABLE=\\"no\\"'\''#CCARGS="\$CCARGS $(pkgconf --cflags icu-uc icu-i18n)" SYSLIBS="\$SYSLIBS $(pkgconf --libs icu-uc icu-i18n)"#' -i makedefs
 sed "s|-DNO_EAI||g" -i makedefs
-cat makedefs
 
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
@@ -133,6 +132,9 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     manpage_directory="$install_root"/share/man \
     makefiles &&
     make
+
+mkdir -p "$install_root"/lib
+cp -a lib/* "$install_root"/lib/
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 sh postfix-install -non-interactive -package \
