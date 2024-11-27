@@ -119,7 +119,7 @@ CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" SHLIB_RPATH="$LDFLAGS" shared=yes pie=yes dynamicmaps=yes \
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" SHLIB_RPATH="-Wl,--enable-new-dtags $LDFLAGS" shared=yes pie=yes dynamicmaps=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
     command_directory="$install_root"/sbin \
