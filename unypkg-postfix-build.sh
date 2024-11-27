@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-unyp install lmdb libnsl cyrus-sasl icu openssl
+unyp install lmdb libnsl cyrus-sasl icu openssl pcre2
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -90,6 +90,8 @@ groupadd -g 32 postfix &&
 sed -i 's/.\x08//g' README_FILES/*
 
 sed "s#\(uname -r\) 2>/dev/null#\(uname -r | grep -o "^[0-9.]\*"\) 2>/dev/null#" -i makedefs
+sed '/CCARGS="\$CCARGS -DNO_EAI"/a SYSLIBS="\$SYSLIBS $icu_ldflags"' -i makedefs
+sed '#CCARGS="\$CCARGS -DNO_EAI"#CCARGS="\$CCARGS \$icu_cppflags"#' -i makedefs
 
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
@@ -109,9 +111,11 @@ icu_dir=(/uny/pkg/icu/*)
 CCARGS="$CCARGS -I${icu_dir[0]}/include"
 SYSLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
+CCARGS="$CCARGS -DHAS_PCRE=2"
+
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" pie=yes \
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" shared=yes pie=yes dynamicmaps=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
     command_directory="$install_root"/sbin \
