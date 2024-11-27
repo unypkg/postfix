@@ -112,7 +112,7 @@ AUXLIBS="$AUXLIBS -L${openssl_dir[0]}/lib -lssl -lcrypto"
 
 icu_dir=(/uny/pkg/icu/*)
 CCARGS="$CCARGS -I${icu_dir[0]}/include"
-AUXLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
+AUXLIBS="$AUXLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
 pcre2_dir=(/uny/pkg/pcre2/*)
 CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
