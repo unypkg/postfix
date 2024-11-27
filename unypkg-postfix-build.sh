@@ -120,8 +120,8 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-#$LDFLAGS
-make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" SHLIB_RPATH="-Wl,--enable-new-dtags" \
+#SHLIB_RPATH="-Wl,--enable-new-dtags $LDFLAGS"
+make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     shared=yes pie=yes dynamicmaps=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
