@@ -93,6 +93,8 @@ sed 's#(uname -r) 2>/dev/null#\(uname -r | grep -o "^[0-9.]\*") 2>/dev/null#' -i
 sed '/CCARGS="\$CCARGS -DNO_EAI"/a SYSLIBS="\$SYSLIBS $icu_ldflags"' -i makedefs
 sed '#CCARGS="\$CCARGS -DNO_EAI"#CCARGS="\$CCARGS \$icu_cppflags"#' -i makedefs
 sed 's#CCARGS="\$CCARGS -DNO_EAI"'\'' -DDEF_SMTPUTF8_ENABLE=\\"no\\"'\''#CCARGS="\$CCARGS $(pkgconf --cflags icu-uc icu-i18n)" SYSLIBS="\$SYSLIBS $(pkgconf --libs icu-uc icu-i18n)"#' -i makedefs
+sed "s|-DNO_EAI||g" -i makedefs
+cat makedefs
 
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
