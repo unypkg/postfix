@@ -114,7 +114,8 @@ icu_dir=(/uny/pkg/icu/*)
 CCARGS="$CCARGS -I${icu_dir[0]}/include"
 #SYSLIBS="$SYSLIBS -L${icu_dir[0]}/lib -licui18n -licuuc -licudata"
 
-CCARGS="$CCARGS -DHAS_PCRE=2"
+pcre2_dir=(/uny/pkg/pcre2/*)
+CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
