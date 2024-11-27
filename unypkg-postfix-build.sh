@@ -99,9 +99,9 @@ cat makedefs
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
 
-cyrus_include_dir=(/uny/pkg/cyrus-sasl/*/include/sasl)
-CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${cyrus_include_dir[0]}"
-AUXLIBS="$AUXLIBS -lsasl2"
+cyrus_include_dir=(/uny/pkg/cyrus-sasl/*)
+CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${cyrus_include_dir[0]}/include/sasl"
+AUXLIBS="$AUXLIBS -L${cyrus_include_dir[0]}/lib -lsasl2"
 
 CCARGS="$CCARGS -DHAS_LMDB"
 AUXLIBS="$AUXLIBS -llmdb"
