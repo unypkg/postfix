@@ -99,16 +99,16 @@ cat makedefs
 CCARGS="-DNO_NIS -DNO_DB"
 AUXLIBS=""
 
-cyrus_include_dir=(/uny/pkg/cyrus-sasl/*)
-CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${cyrus_include_dir[0]}/include/sasl"
-AUXLIBS="$AUXLIBS -L${cyrus_include_dir[0]}/lib -lsasl2"
+cyrus_dir=(/uny/pkg/cyrus-sasl/*)
+CCARGS="$CCARGS -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${cyrus_dir[0]}/include/sasl"
+AUXLIBS="$AUXLIBS -L${cyrus_dir[0]}/lib -lsasl2"
 
 CCARGS="$CCARGS -DHAS_LMDB"
 AUXLIBS="$AUXLIBS -llmdb"
 
-openssl_include_dir=(/uny/pkg/openssl/*/include/openssl)
-CCARGS="$CCARGS -DUSE_TLS -I${openssl_include_dir[0]}"
-AUXLIBS="$AUXLIBS -lssl -lcrypto"
+openssl_dir=(/uny/pkg/openssl/*)
+CCARGS="$CCARGS -DUSE_TLS -I${openssl_dir[0]}/include/openssl}"
+AUXLIBS="$AUXLIBS -L${openssl_dir[0]}/lib -lssl -lcrypto"
 
 icu_dir=(/uny/pkg/icu/*)
 CCARGS="$CCARGS -I${icu_dir[0]}/include"
@@ -120,8 +120,8 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-#SHLIB_RPATH="-Wl,--enable-new-dtags $LDFLAGS"
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
+    SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
     shared=yes pie=yes dynamicmaps=yes \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     daemon_directory="$install_root"/lib/postfix \
