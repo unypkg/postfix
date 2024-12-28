@@ -139,13 +139,13 @@ cp -a lib/* "$install_root"/lib/
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 sh postfix-install -non-interactive -package \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-    daemon_directory="$install_root"/lib/postfix \
-    command_directory="$install_root"/sbin \
-    mailq_path="$install_root"/bin/mailq \
-    newaliases_path="$install_root"/bin/newaliases \
-    sendmail_path="$install_root"/sbin/sendmail \
-    shlib_directory="$install_root"/lib \
-    manpage_directory="$install_root"/share/man
+    daemon_directory=/lib/postfix \
+    command_directory=/sbin \
+    mailq_path=/bin/mailq \
+    newaliases_path=/bin/newaliases \
+    sendmail_path=/sbin/sendmail \
+    shlib_directory=/lib \
+    manpage_directory=/share/man
 
 ####################################################
 ### End of individual build script
