@@ -136,6 +136,8 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     cp -a lib/* "$install_root"/lib/ &&
     make install
 
+    ls */*
+
 #sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 #sh postfix-install -non-interactive -package \
 #    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
