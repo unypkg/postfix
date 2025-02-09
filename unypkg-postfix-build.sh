@@ -147,6 +147,28 @@ sh postfix-install -non-interactive -package \
     shlib_directory=/lib \
     manpage_directory=/share/man
 
+tee "$install_root"/etc/postfix.service >/dev/null <<EOF
+[Unit]
+Description=Postfix Mail Transport Agent
+After=network.target
+
+[Service]
+CapabilityBoundingSet=~ CAP_NET_ADMIN CAP_SYS_ADMIN CAP_SYS_BOOT CAP_SYS_MODULE
+ExecReload=${install_root}/sbin/postfix reload
+ExecStart=${install_root}/sbin/postfix start
+ExecStop=${install_root}/sbin/postfix stop
+PIDFile=/var/spool/postfix/pid/master.pid
+PrivateDevices=true
+PrivateTmp=true
+ProtectSystem=true
+Restart=always
+Type=forking
+
+[Install]
+Alias=postfix.service
+WantedBy=multi-user.target
+EOF
+
 ####################################################
 ### End of individual build script
 

@@ -27,6 +27,9 @@ if [ ! -d /var/spool/postfix ]; then
     install -v -dm 755 -o postfix -g postfix /var/spool/postfix
 fi
 
+cp -a etc/postfix.service /etc/systemd/system/uny-postfix.service
+systemctl daemon-reload
+
 #############################################################################################
 ### End of script
 
