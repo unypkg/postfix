@@ -117,44 +117,37 @@ pcre2_dir=(/uny/pkg/pcre2/*)
 CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
 AUXLIBS_PCRE=$(pcre2-config --libs8)
 
-#export install_root=/uny/pkg/"$pkgname"/"$pkgver"
-
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
 
-#make non-interactive-package install_root=/uny/pkg/"$pkgname"/"$pkgver"
+uny_folder=uny/pkg/"$pkgname"/"$pkgver"
+uny_install_root=/"$uny_folder"
 
-    # config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-    # daemon_directory="$install_root"/lib/postfix \
-    # command_directory="$install_root"/sbin \
-    # mailq_path="$install_root"/bin/mailq \
-    # newaliases_path="$install_root"/bin/newaliases \
-    # sendmail_path="$install_root"/sbin/sendmail \
-    # shlib_directory="$install_root"/lib \
-    # manpage_directory="$install_root"/share/man \
+mkdir -p "$uny_install_root"/lib
+cp -a lib/* "$uny_install_root"/lib/
 
-install_root=/uny/pkg/"$pkgname"/"$pkgver"
-
-mkdir -p "$install_root"/lib
-cp -a lib/* "$install_root"/lib/
+mkdir /postfix
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 
 sh postfix-install -non-interactive -package \
-    install_root="$install_root" \
+    install_root=/postfix \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-    daemon_directory=/lib/postfix \
-    command_directory=/sbin \
-    mailq_path=/bin/mailq \
-    newaliases_path=/bin/newaliases \
-    sendmail_path=/sbin/sendmail \
-    shlib_directory=/lib \
-    manpage_directory=/share/man
+    daemon_directory="$uny_install_root"/lib/postfix \
+    command_directory="$uny_install_root"/bin \
+    mailq_path="$uny_install_root"/sbin/mailq \
+    newaliases_path="$uny_install_root"/bin/newaliases \
+    sendmail_path="$uny_install_root"/sbin/sendmail \
+    shlib_directory="$uny_install_root"/lib \
+    manpage_directory="$uny_install_root"/share/man
 
-tee "$install_root"/etc/postfix.service >/dev/null <<EOF
+mv -v /postfix/etc /postfix/"$uny_folder"
+mv -v /postfix/"$uny_folder" "$uny_install_root"
+
+tee "$uny_install_root"/etc/postfix.service >/dev/null <<EOF
 [Unit]
 Description=Postfix Mail Transport Agent
 After=network.target
