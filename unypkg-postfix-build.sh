@@ -119,17 +119,14 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
+CCARGS="$CCARGS -DDEF_CONFIG_DIR=\\\"/etc/uny/postfix\\\" -DDEF_META_DIR=\\\"/etc/uny/postfix\\\" \
+-DDEF_DAEMON_DIR=\\\"${uny_install_root}/lib/postfix\\\" -DDEF_COMMAND_DIR=\\\"${uny_install_root}/bin\\\" \
+-DDEF_MAILQ_PATH=\\\"${uny_install_root}/sbin/mailq\\\" -DDEF_NEWALIAS_PATH=\\\"${uny_install_root}/bin/newaliases\\\" \
+-DDEF_SENDMAIL_PATH=\\\"${uny_install_root}/sbin/sendmail\\\" -DDEF_SHLIB_DIR=\\\"${uny_install_root}/lib\\\" \
+-DDEF_MANPAGE_DIR=\\\"${uny_install_root}/share/man\\\" "
+
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
-    install_root="$uny_install_root" \
-    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-    daemon_directory="$uny_install_root"/lib/postfix \
-    command_directory="$uny_install_root"/bin \
-    mailq_path="$uny_install_root"/sbin/mailq \
-    newaliases_path="$uny_install_root"/bin/newaliases \
-    sendmail_path="$uny_install_root"/sbin/sendmail \
-    shlib_directory="$uny_install_root"/lib \
-    manpage_directory="$uny_install_root"/share/man \
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
@@ -139,7 +136,7 @@ cp -a lib/* "$uny_install_root"/lib/
 
 mkdir /postfix
 
-sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
+sed "s#^PATH=.*#PATH=$PATH #" -i postfix-install
 
 sh postfix-install -non-interactive -package \
     install_root=/postfix \
