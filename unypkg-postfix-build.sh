@@ -153,9 +153,9 @@ After=network.target
 
 [Service]
 CapabilityBoundingSet=~ CAP_NET_ADMIN CAP_SYS_ADMIN CAP_SYS_BOOT CAP_SYS_MODULE
-ExecReload=${install_root}/sbin/postfix reload
-ExecStart=${install_root}/sbin/postfix start
-ExecStop=${install_root}/sbin/postfix stop
+ExecReload=${uny_install_root}/bin/postfix reload
+ExecStart=${uny_install_root}/bin/postfix start
+ExecStop=${uny_install_root}/bin/postfix stop
 PIDFile=/var/spool/postfix/pid/master.pid
 PrivateDevices=true
 PrivateTmp=true
