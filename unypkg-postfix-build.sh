@@ -144,7 +144,7 @@ sh postfix-install -non-interactive -package \
     manpage_directory="$uny_install_root"/share/man
 
 mv -v /postfix/etc /postfix/uny/pkg/"$pkgname"/"$pkgver"/
-mv -v /postfix/uny/pkg/"$pkgname"/"$pkgver" /uny/pkg/"$pkgname"/
+cp -a /postfix/uny/pkg/"$pkgname"/"$pkgver"/* "$uny_install_root"/
 
 tee "$uny_install_root"/etc/postfix.service >/dev/null <<EOF
 [Unit]
