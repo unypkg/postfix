@@ -125,7 +125,7 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     makefiles &&
     make
 
-make non-interactive-package install_root=/uny/pkg/"$pkgname"/"$pkgver"
+#make non-interactive-package install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
     # config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     # daemon_directory="$install_root"/lib/postfix \
@@ -141,15 +141,16 @@ make non-interactive-package install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
 # sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 
-# sh postfix-install -non-interactive -package \
-#     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-#     daemon_directory="$install_root"/lib/postfix \
-#     command_directory="$install_root"/sbin \
-#     mailq_path="$install_root"/bin/mailq \
-#     newaliases_path="$install_root"/bin/newaliases \
-#     sendmail_path="$install_root"/sbin/sendmail \
-#     shlib_directory="$install_root"/lib \
-#     manpage_directory="$install_root"/share/man
+sh postfix-install -non-interactive -package \
+    install_root=/uny/pkg/"$pkgname"/"$pkgver" \
+    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
+    daemon_directory=/lib/postfix \
+    command_directory=/sbin \
+    mailq_path=/bin/mailq \
+    newaliases_path=/bin/newaliases \
+    sendmail_path=/sbin/sendmail \
+    shlib_directory=/lib \
+    manpage_directory=/share/man
 
 tee "$install_root"/etc/postfix.service >/dev/null <<EOF
 [Unit]
