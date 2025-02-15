@@ -129,7 +129,7 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     newaliases_path="$uny_install_root"/bin/newaliases \
     sendmail_path="$uny_install_root"/sbin/sendmail \
     shlib_directory="$uny_install_root"/lib \
-    manpage_directory="$uny_install_root"/share/man
+    manpage_directory="$uny_install_root"/share/man \
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
