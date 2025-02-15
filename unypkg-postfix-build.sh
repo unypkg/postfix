@@ -117,13 +117,15 @@ pcre2_dir=(/uny/pkg/pcre2/*)
 CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
 AUXLIBS_PCRE=$(pcre2-config --libs8)
 
-export install_root=/uny/pkg/"$pkgname"/"$pkgver"
+#export install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
+
+make non-interactive-package install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
     # config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     # daemon_directory="$install_root"/lib/postfix \
@@ -134,23 +136,20 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     # shlib_directory="$install_root"/lib \
     # manpage_directory="$install_root"/share/man \
 
-mkdir -p "$install_root"/lib
-cp -a lib/* "$install_root"/lib/
+#mkdir -p "$install_root"/lib
+#cp -a lib/* "$install_root"/lib/
 
-sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
+# sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 
-sh postfix-install -non-interactive -package \
-    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
-    daemon_directory="$install_root"/lib/postfix \
-    command_directory="$install_root"/sbin \
-    mailq_path="$install_root"/bin/mailq \
-    newaliases_path="$install_root"/bin/newaliases \
-    sendmail_path="$install_root"/sbin/sendmail \
-    shlib_directory="$install_root"/lib \
-    manpage_directory="$install_root"/share/man
-
-HTML_DIRECTORY=$install_root$html_directory
-README_DIRECTORY=$install_root$readme_directory
+# sh postfix-install -non-interactive -package \
+#     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
+#     daemon_directory="$install_root"/lib/postfix \
+#     command_directory="$install_root"/sbin \
+#     mailq_path="$install_root"/bin/mailq \
+#     newaliases_path="$install_root"/bin/newaliases \
+#     sendmail_path="$install_root"/sbin/sendmail \
+#     shlib_directory="$install_root"/lib \
+#     manpage_directory="$install_root"/share/man
 
 tee "$install_root"/etc/postfix.service >/dev/null <<EOF
 [Unit]
