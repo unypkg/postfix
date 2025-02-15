@@ -137,7 +137,7 @@ mkdir -p "$install_root"/lib
 cp -a lib/* "$install_root"/lib/
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
-sh postfix-install -non-interactive -package
+sh postfix-install -non-interactive #-package
     #config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     #daemon_directory="$install_root"/lib/postfix \
     #command_directory="$install_root"/sbin \
