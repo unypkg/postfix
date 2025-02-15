@@ -119,11 +119,11 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-CCARGS="$CCARGS -DDEF_CONFIG_DIR=\\\"/etc/uny/postfix\\\" -DDEF_META_DIR=\\\"/etc/uny/postfix\\\" \
--DDEF_DAEMON_DIR=\\\"${uny_install_root}/lib/postfix\\\" -DDEF_COMMAND_DIR=\\\"${uny_install_root}/bin\\\" \
--DDEF_MAILQ_PATH=\\\"${uny_install_root}/sbin/mailq\\\" -DDEF_NEWALIAS_PATH=\\\"${uny_install_root}/bin/newaliases\\\" \
--DDEF_SENDMAIL_PATH=\\\"${uny_install_root}/sbin/sendmail\\\" -DDEF_SHLIB_DIR=\\\"${uny_install_root}/lib\\\" \
--DDEF_MANPAGE_DIR=\\\"${uny_install_root}/share/man\\\" "
+CCARGS="$CCARGS -DDEF_CONFIG_DIR=\"/etc/uny/postfix\" -DDEF_META_DIR=\"/etc/uny/postfix\" \
+-DDEF_DAEMON_DIR=\"${uny_install_root}/lib/postfix\" -DDEF_COMMAND_DIR=\"${uny_install_root}/bin\" \
+-DDEF_MAILQ_PATH=\"${uny_install_root}/sbin/mailq\" -DDEF_NEWALIAS_PATH=\"${uny_install_root}/bin/newaliases\" \
+-DDEF_SENDMAIL_PATH=\"${uny_install_root}/sbin/sendmail\" -DDEF_SHLIB_DIR=\"${uny_install_root}/lib\" \
+-DDEF_MANPAGE_DIR=\"${uny_install_root}/share/man\""
 
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
