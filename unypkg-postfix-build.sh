@@ -123,8 +123,7 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
     makefiles &&
     make
 
-uny_folder=uny/pkg/"$pkgname"/"$pkgver"
-uny_install_root=/"$uny_folder"
+uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
 mkdir -p "$uny_install_root"/lib
 cp -a lib/* "$uny_install_root"/lib/
@@ -144,8 +143,8 @@ sh postfix-install -non-interactive -package \
     shlib_directory="$uny_install_root"/lib \
     manpage_directory="$uny_install_root"/share/man
 
-mv -v /postfix/etc /postfix/"$uny_folder"
-mv -v /postfix/"$uny_folder" "$uny_install_root"
+mv -v /postfix/etc /postfix/uny/pkg/"$pkgname"/"$pkgver"/
+mv -v /postfix/uny/pkg/"$pkgname"/"$pkgver" /uny/pkg/"$pkgname"/
 
 tee "$uny_install_root"/etc/postfix.service >/dev/null <<EOF
 [Unit]
