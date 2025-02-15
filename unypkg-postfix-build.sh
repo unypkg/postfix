@@ -136,7 +136,7 @@ make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLI
 mkdir -p "$install_root"/lib
 cp -a lib/* "$install_root"/lib/
 
-export install_root=/uny/pkg/"$pkgname"/"$pkgver"
+export install_root=/
 
 sed "s#^PATH=.*#PATH=$PATH#" -i postfix-install
 
