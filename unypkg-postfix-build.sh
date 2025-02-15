@@ -119,6 +119,7 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
+    config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
