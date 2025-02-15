@@ -117,14 +117,22 @@ pcre2_dir=(/uny/pkg/pcre2/*)
 CCARGS="$CCARGS -DHAS_PCRE=2 -I${pcre2_dir[0]}/include"
 AUXLIBS_PCRE=$(pcre2-config --libs8)
 
+uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
+
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
+    install_root="$uny_install_root" \
     config_directory=/etc/uny/postfix meta_directory=/etc/uny/postfix \
+    daemon_directory="$uny_install_root"/lib/postfix \
+    command_directory="$uny_install_root"/bin \
+    mailq_path="$uny_install_root"/sbin/mailq \
+    newaliases_path="$uny_install_root"/bin/newaliases \
+    sendmail_path="$uny_install_root"/sbin/sendmail \
+    shlib_directory="$uny_install_root"/lib \
+    manpage_directory="$uny_install_root"/share/man
     shared=yes pie=yes dynamicmaps=yes \
     makefiles &&
     make
-
-uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
 mkdir -p "$uny_install_root"/lib
 cp -a lib/* "$uny_install_root"/lib/
