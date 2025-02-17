@@ -119,7 +119,7 @@ AUXLIBS_PCRE=$(pcre2-config --libs8)
 
 uny_install_root=/uny/pkg/"$pkgname"/"$pkgver"
 
-CCARGS="$CCARGS -DDEF_CONFIG_DIR=\\\"/etc/uny/postfix\\\"
+CCARGS="$CCARGS -DDEF_CONFIG_DIR=\\\"/etc/uny/postfix\\\""
 
 make CCARGS="$CCARGS" AUXLIBS="$AUXLIBS" SYSLIBS="$SYSLIBS" AUXLIBS_PCRE="$AUXLIBS_PCRE" \
     SHLIB_RPATH="-Wl,--enable-new-dtags -Wl,--dynamic-linker=$(grep -o "^.*glibc/[^:]*" /uny/paths/lib)/ld-linux-x86-64.so.2 -Wl,-rpath=/uny/pkg/"$pkgname"/"$pkgver"/lib:$LIBRARY_PATH" \
