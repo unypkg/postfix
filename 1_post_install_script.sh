@@ -29,6 +29,8 @@ fi
 
 cp -a etc/postfix.service /etc/systemd/system/uny-postfix.service
 systemctl daemon-reload
+systemctl enable uny-postfix
+systemctl start uny-postfix
 
 #############################################################################################
 ### End of script
