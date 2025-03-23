@@ -20,11 +20,10 @@ chown -v postfix:postfix /var/mail
 if [ ! -f /etc/uny/postfix/main.cf ]; then
     install -v -dm 755 -o postfix -g postfix /etc/uny/postfix
     cp -a etc/uny/postfix/* /etc/uny/postfix/
+    if [ ! -d /var/spool/postfix ]; then
+        install -v -dm 755 -o postfix -g postfix /var/spool/postfix
+    fi
     bin/postfix -c /etc/uny/postfix set-permissions
-fi
-
-if [ ! -d /var/spool/postfix ]; then
-    install -v -dm 755 -o postfix -g postfix /var/spool/postfix
 fi
 
 cp -a etc/postfix.service /etc/systemd/system/uny-postfix.service
